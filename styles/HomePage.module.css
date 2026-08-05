@@ -2,36 +2,39 @@
 /* Navbar Styles */
 /* ==================================== */
 
-.navbarContainer{
-    padding-block: calc(var(--spacing)*3);
-    justify-content: space-between;
-    flex-direction: row;
-    width: 100%;
-    display: flex;
-    margin-bottom: calc(var(--spacing)*3);
-    z-index: 1000;
-    position: relative;
+.navbarContainer {
+  padding: 0 22px;
+  padding-block: calc(var(--spacing) * 3);
+  justify-content: space-between;
+  flex-direction: row;
+  width: 100%;
+  display: flex;
+  margin-bottom: calc(var(--spacing) * 3);
+  z-index: 1000;
+  position: relative;
 }
 
 .navContent {
-    padding-top: calc(var(--spacing)*1);
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    transform: scale(0.75);
-    display: flex;
-    color: #1a1b1c;
+  padding-top: calc(var(--spacing) * 1);
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  transform: scale(0.75);
+  display: flex;
+  color: #1a1b1c;
 }
 
 .navLink {
-    margin-right: 10px;
+  margin-right: 10px;
+  font-weight: 700;
 }
 
 .navBtn {
-    scale: 0.75;
-    background-color: #1a1b1c;
-    color: #fcfcfc;
-    padding: 10px 20px;
+  scale: 0.75;
+  background-color: #1a1b1c;
+  color: #fcfcfc;
+  padding: 10px 20px;
+  font-size: 12px;
 }
 
 /*============================= */
@@ -39,40 +42,40 @@
 /*============================= */
 
 .row {
-    position: fixed;
-    left: 35%;
-    top: 15%;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 70vh;
-    display: flex;
+  position: fixed;
+  left: 35%;
+  top: 15%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 70vh;
+  display: flex;
 }
 
 .main_heading {
-    position: relative;
-    text-align: center;
-    z-index: 10;
+  position: relative;
+  text-align: center;
+  z-index: 10;
 }
 
 .heading {
-    opacity: 1;
-    font-size: 100px;
-    color: #1a1b1c;
-    letter-spacing: -0.05em;
-    line-height: 1;
+  opacity: 1;
+  font-size: 100px;
+  color: #1a1b1c;
+  letter-spacing: -0.05em;
+  line-height: 1;
 }
 
 .sub_heading {
-    position: fixed;
-    left: 30px;
-    bottom: 50px;
-    display: block;
-    text-transform: uppercase;
-    color: #1a1b1c;
-    font-weight: 500;
-    font-size:14px;
-    line-height: 1.4;
+  position: fixed;
+  left: 30px;
+  bottom: 50px;
+  display: block;
+  text-transform: uppercase;
+  color: #1a1b1c;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.4;
 }
 
 /* ------------------------- */
@@ -80,63 +83,137 @@
 /* ------------------------- */
 
 .left_selection {
-    position: fixed;
-    left: 25%;
-    top: 25%;
-    width: 500px;
-    height: 500px;
-    display: block;
-    transition: all 0.5s ease-in-out;
-    opacity: 1;
-    transform: translateX(-50%);
-    translate: 0 50%;
+  position: fixed;
+  left: 25%;
+  top: 25%;
+  width: 500px;
+  height: 500px;
+  display: block;
+  transition: all 0.5s ease-in-out;
+  opacity: 1;
+  transform: translateX(-50%);
+  translate: 0 50%;
 }
 
 .lsContent {
-    position: relative;
-    left: -95%;
-    bottom: 50%;
-    width: 100%;
-    height: 100%;
+  position: relative;
+  left: -95%;
+  bottom: 50%;
+  width: 100%;
+  height: 100%;
 }
 
 .lsContentBorder {
-    position: fixed;
-    left: -100%;
-    bottom: 50%;
-    width: 100%;
-    height: 100%;
-    rotate: 45deg;
-    border: 1px dotted #a0a4ab;
-    /* inset: 0; */
+  position: fixed;
+  left: -100%;
+  bottom: 50%;
+  width: 100%;
+  height: 100%;
+  rotate: 45deg;
+  border: 1px dotted #a0a4ab;
+  /* inset: 0; */
 }
 
 .lsDiscoverBtn {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
+  position: absolute;
+  top: 50%;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  gap: calc(var(--spacing) * 4);
 }
 
 .playBtnBrdr {
-    width: 30px;
-    height: 30px;
-    rotate: 45deg;
-    cursor: pointer;
-    border: 1px solid #1a1b1c;
-    transition: all 0.3s ease-in-out;
-    margin-right: 10px;
-    
-    
+  width: 30px;
+  height: 30px;
+  rotate: 45deg;
+  cursor: pointer;
+  border: 1px solid #1a1b1c;
+  transition: all 0.3s ease-in-out;
+  margin-right: 10px;
 }
 
 .arrowLeft {
-    position: absolute;
-    top: -2px;
-    left: -4px;
-    font-size: 36px;
-} 
+  position: absolute;
+  top: -2px;
+  left: -4px;
+  font-size: 36px;
+  cursor: pointer;
+}
 
+/* ----------------------- */
+/* Right Selection Styles */
+/* ----------------------- */
+
+.right_selection {
+  position: fixed;
+  top: 50%;
+  right: 10%;
+  width: 500px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  translate: 50% -50%;
+  transition: all 0.5s ease-in-out;
+}
+
+.rsContent {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rsContentBorder {
+  position: fixed;
+  right: -50%;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  rotate: 45deg;
+  border: 1px dotted #a0a4ab;
+}
+
+.rsBtn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: inline-flex;
+  height: calc(var(--spacing) * 9);
+  translate: -20%;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  gap: calc(var(--spacing) * 4);
+  border-radius: var(--radius-md);
+  padding-inline: calc(var(--spacing) * 1);
+  padding-block: calc(var(--spacing) * 1);
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  font-weight: var(--font-weight-normal);
+  white-space: no-wrap;
+  color: #1a1b1c;
+  transition: all 0.15s ease-in-out;
+}
+
+.rsBtnIcon {
+  width: 30px;
+  height: 30px;
+  rotate: 45deg;
+  border: 1px solid black;
+  transition: all 0.3s ease-in-out;
+}
+
+.arrowRight {
+  position: absolute;
+  right: 2;
+  font-size: 32px;
+  scale: 0.9;
+  cursor: pointer;
+  transition: all 0.3s;
+}

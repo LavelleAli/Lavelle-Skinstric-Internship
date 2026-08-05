@@ -4,41 +4,15 @@ import axios from "axios";
 import Image from "next/image";
 import styles from "@/styles/HomePage.module.css";
 import { MdArrowLeft } from "react-icons/md";
+import { RiArrowRightSFill } from "react-icons/ri";
+import NavBar from "@/components/navBar/page";
 
 export default function Home() {
-  const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  const fetchAPI = useEffectEvent(async () => {
-    try {
-      const { data } = await axios.get(
-        `https://us-central1-frontend-simplified.cloudfunctions.net/skinstricPhaseOne`,
-      );
-      setData(data);
-      console.log(data);
-    } catch (err) {
-      setError(err);
-    }
-  });
-
-  useEffect(() => {
-    fetchAPI();
-  }, []);
+  
 
   return (
     <>
-      <div className={styles.navbarContainer}>
-        <div className={styles.navContent}>
-          <a href="" className={styles.navLink}>Skinstric</a>
-          <div className={styles.navBarLeftContent}>
-            <Image src="" alt="" className={styles.bracket} />
-            <p>INTRO</p>
-            <Image src="" alt="" className={styles.bracket} />
-          </div>
-        </div>
-        <button className={styles.navBtn}>ENTER CODE</button>
-      </div>
+      <NavBar />
       <div className="nextRouteAnnouncerForScreenreadersComeBackToThisLater"></div>
       <div>
         <div className={styles.row}>
@@ -50,7 +24,7 @@ export default function Home() {
           </div> */}
           <div className={styles.main_heading}>
             <h1 className={styles.heading}>
-              Sophisticated <br/> <span>skincare</span>
+              Sophisticated <br /> <span>skincare</span>
             </h1>
           </div>
           <div className={styles.sub_heading}>
@@ -65,19 +39,19 @@ export default function Home() {
               <div className={styles.lsContentBorder}></div>
               <button className={styles.lsDiscoverBtn}>
                 <div className={styles.playBtnBrdr}></div>
-               <MdArrowLeft  className={styles.arrowLeft}/>
+                <MdArrowLeft className={styles.arrowLeft} />
                 <span>Discover A.I.</span>
               </button>
             </div>
           </div>
-          <div id="right_selection">
-            <div>
-              <div></div>
+          <div className={styles.right_selection}>
+            <div className={styles.rsContent}>
+              <div className={styles.rsContentBorder}></div>
               <a href="">
-                <button>
+                <button className={styles.rsBtn}>
                   TAKE TEST
-                  <div></div>
-                  <span>(playbutton)</span>
+                  <div className={styles.rsBtnIcon}></div>
+                  <RiArrowRightSFill className={styles.arrowRight} />
                 </button>
               </a>
             </div>
