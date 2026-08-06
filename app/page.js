@@ -1,14 +1,19 @@
 "use client";
-import { useState, useEffect, useEffectEvent } from "react";
-import axios from "axios";
-import Image from "next/image";
+import { useState, useEffect } from "react";
 import styles from "@/styles/HomePage.module.css";
 import { MdArrowLeft } from "react-icons/md";
 import { RiArrowRightSFill } from "react-icons/ri";
 import NavBar from "@/components/navBar/page";
+import Link from "next/link";
 
 export default function Home() {
-  
+  const [visible, setVisible] = useState(false);
+  const [leftHovered, setLeftHovered] = useState(false);
+  const [rightHovered, setRightHovered] = useState(false);
+
+  useEffect(() => {
+    setVisible(true);
+  }, []);
 
   return (
     <>
@@ -23,8 +28,21 @@ export default function Home() {
             <div></div>
           </div> */}
           <div className={styles.main_heading}>
-            <h1 className={styles.heading}>
-              Sophisticated <br /> <span>skincare</span>
+            <h1
+              className={`${styles.heading} [transition:opacity_3000ms_ease,translate_800ms_ease] ${
+                visible ? "opacity-100" : "opacity-0"
+              } ${leftHovered ? "translate-x-[15vw] " : "translate-x-0"}
+               ${rightHovered ? "translate-x-[-15vw]" : "translate-x-0"}`}
+            >
+              Sophisticated <br />{" "}
+              <span
+                className={`inline-block [transition:translate_800ms_ease]
+                  ${leftHovered ? "translate-x-[6rem]" : "translate-x-0"}
+                  ${rightHovered ? "translate-x-[-6rem]" : "translate-x-0"}
+                `}
+              >
+                skincare
+              </span>
             </h1>
           </div>
           <div className={styles.sub_heading}>
@@ -34,7 +52,11 @@ export default function Home() {
               needs.
             </p>
           </div>
-          <div className={styles.left_selection}>
+          <div
+            className={`${styles.left_selection} ${rightHovered ? "opacity-0" : "opacity-100"}`}
+            onMouseEnter={() => setLeftHovered(true)}
+            onMouseLeave={() => setLeftHovered(false)}
+          >
             <div className={styles.lsContent}>
               <div className={styles.lsContentBorder}></div>
               <button className={styles.lsDiscoverBtn}>
@@ -44,16 +66,20 @@ export default function Home() {
               </button>
             </div>
           </div>
-          <div className={styles.right_selection}>
+          <div
+            className={`${styles.right_selection} ${leftHovered ? "opacity-0" : "opacity-100"}`}
+            onMouseEnter={() => setRightHovered(true)}
+            onMouseLeave={() => setRightHovered(false)}
+          >
             <div className={styles.rsContent}>
               <div className={styles.rsContentBorder}></div>
-              <a href="">
+              <Link href="/testing">
                 <button className={styles.rsBtn}>
                   TAKE TEST
                   <div className={styles.rsBtnIcon}></div>
                   <RiArrowRightSFill className={styles.arrowRight} />
                 </button>
-              </a>
+              </Link>
             </div>
           </div>
           {/* <div>

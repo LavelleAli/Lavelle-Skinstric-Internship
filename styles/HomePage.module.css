@@ -59,12 +59,14 @@
 }
 
 .heading {
-  opacity: 1;
+  /* opacity: 1; */
   font-size: 100px;
   color: #1a1b1c;
   letter-spacing: -0.05em;
   line-height: 1;
+  /* transition: all 300ms ease; */
 }
+
 
 .sub_heading {
   position: fixed;
@@ -90,7 +92,7 @@
   height: 500px;
   display: block;
   transition: all 0.5s ease-in-out;
-  opacity: 1;
+  /* opacity: 1; */
   transform: translateX(-50%);
   translate: 0 50%;
 }

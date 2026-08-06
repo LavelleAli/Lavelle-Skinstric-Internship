@@ -1,15 +1,15 @@
 import React from "react";
 import styles from "@/styles/HomePage.module.css";
-import Image from "next/image";
+import Link from "next/link";
 
 const NavBar = () => {
   return (
     <>
       <div className={styles.navbarContainer}>
         <div className={styles.navContent}>
-          <a href="" className={styles.navLink}>
+          <Link href="/" className={styles.navLink}>
             Skinstric
-          </a>
+          </Link>
           <div className={styles.navBarLeftContent}>
             {/* <Image src="" alt="" className={styles.bracket} /> */}
             <p>INTRO</p>
