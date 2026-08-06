@@ -21,12 +21,8 @@ export default function Home() {
       <div className="nextRouteAnnouncerForScreenreadersComeBackToThisLater"></div>
       <div>
         <div className={styles.row}>
-          {/* <div>
-            <div></div>
-          </div>
-          <div>
-            <div></div>
-          </div> */}
+          <div className={styles.lsContentBorder}></div>
+          <div className={styles.rsContentBorder}></div>
           <div className={styles.main_heading}>
             <h1
               className={`${styles.heading} [transition:opacity_3000ms_ease,translate_800ms_ease] ${
@@ -54,12 +50,14 @@ export default function Home() {
           </div>
           <div
             className={`${styles.left_selection} ${rightHovered ? "opacity-0" : "opacity-100"}`}
-            onMouseEnter={() => setLeftHovered(true)}
-            onMouseLeave={() => setLeftHovered(false)}
           >
             <div className={styles.lsContent}>
               <div className={styles.lsContentBorder}></div>
-              <button className={styles.lsDiscoverBtn}>
+              <button
+                className={styles.lsDiscoverBtn}
+                onMouseEnter={() => setLeftHovered(true)}
+                onMouseLeave={() => setLeftHovered(false)}
+              >
                 <div className={styles.playBtnBrdr}></div>
                 <MdArrowLeft className={styles.arrowLeft} />
                 <span>Discover A.I.</span>
@@ -68,13 +66,15 @@ export default function Home() {
           </div>
           <div
             className={`${styles.right_selection} ${leftHovered ? "opacity-0" : "opacity-100"}`}
-            onMouseEnter={() => setRightHovered(true)}
-            onMouseLeave={() => setRightHovered(false)}
           >
             <div className={styles.rsContent}>
               <div className={styles.rsContentBorder}></div>
               <Link href="/testing">
-                <button className={styles.rsBtn}>
+                <button
+                  className={styles.rsBtn}
+                  onMouseEnter={() => setRightHovered(true)}
+                  onMouseLeave={() => setRightHovered(false)}
+                >
                   TAKE TEST
                   <div className={styles.rsBtnIcon}></div>
                   <RiArrowRightSFill className={styles.arrowRight} />
@@ -82,17 +82,15 @@ export default function Home() {
               </Link>
             </div>
           </div>
-          {/* <div>
-            <a href="">
-              <button>
+          <div className={styles.enterExperience}>
+            <Link href="/testing">
+              <button className={styles.enterExperienceBtn}>
                 <span>ENTER EXPERIENCE</span>
-                <div></div>
-                <span>
-                  <svg></svg>
-                </span>
+                <div className={styles.enterExperienceIcon}></div>
+                <RiArrowRightSFill className={styles.arrowRight} />
               </button>
-            </a>
-          </div> */}
+            </Link>
+          </div>
         </div>
       </div>
     </>
