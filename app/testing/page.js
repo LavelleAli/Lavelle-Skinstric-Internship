@@ -5,11 +5,11 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import axios from "axios";
 import NavBar from "@/components/navBar/page";
-import { MdArrowLeft, MdArrowRight } from "react-icons/md";
+import BackButton from "@/components/BackButton/BackButton";
+import ProceedButton from "@/components/ProceedButton/ProceedButton";
 
 const Testing = () => {
   const containerRef = useRef(null);
-  const proceedRef = useRef(null);
   const [step, setStep] = useState("name");
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
@@ -46,18 +46,6 @@ const Testing = () => {
       });
     },
     { scope: containerRef, dependencies: [loading] },
-  );
-
-  useGSAP(
-    () => {
-      if (step !== "done" || !proceedRef.current) return;
-      gsap.fromTo(
-        proceedRef.current,
-        { x: -40 },
-        { x: 0, duration: 0.6, ease: "power2.out" },
-      );
-    },
-    { dependencies: [step] },
   );
 
   const handleSubmit = (e) => {
@@ -161,34 +149,14 @@ const Testing = () => {
         <Link href="/" className="inset-0" aria-label="Back">
           <div>
             <div className="relative w-12 h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 scale-[1] sm:hidden">
-              <span className="rotate-[-45deg] text-xs font-semibold">Back</span>
-            </div>
-
-            <div className="group hidden sm:flex flex-row relative justify-center items-center">
-              <div className="w-12 h-12 hidden sm:flex justify-center border border-[1A1B1...e-45 scale-[0.85] group-hover:scale-[0.92] ease duration-300 rotate-45 "></div>
-              <span className="absolute left-[15px] bottom-[13px] scale-[0.9] rotate-180 hidden sm:block group-hover:scale-[0.92] ease duration-300"></span>
-              <MdArrowLeft className="absolute left-[-2px] text-5xl" />
-              <span className="text-md font-semibold hidden sm:block ml-6">
+              <span className="rotate-[-45deg] text-xs font-semibold">
                 Back
               </span>
             </div>
 
-            {step === "done" && (
-              <>
-                <div className="absolute right-10 bottom-0 w-12 h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 scale-[1] sm:hidden">
-                  <span className="rotate-[-45deg] text-[10px] font-semibold">Proceed</span>
-                </div>
+            <BackButton />
 
-                <button
-                  ref={proceedRef}
-                  className="hidden sm:flex absolute right-10 bottom-0 items-center gap-15 cursor-pointer group "
-                >
-                  <span className="relative text-[16px] font-semibold">Proceed</span>
-                  <div className="absolute right-10 bottom-0 w-12 h-12 hidden sm:flex justify-center border border-[1A1B1...e-45 scale-[0.85] group-hover:scale-[0.92] ease duration-300 rotate-45 "></div>
-                  <MdArrowRight className="hidden sm:block relative right-10 text-5xl group-hover:scale-105 transform-transition duration 300" />
-                </button>
-              </>
-            )}
+            <ProceedButton step={step} />
           </div>
         </Link>
       </div>
