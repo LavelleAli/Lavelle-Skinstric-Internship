@@ -2,8 +2,8 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import BackButton from "@/components/BackButton/BackButton";
-
-const TIPS = ["Good Lighting", "Neutral Expression", "No Glasses"];
+import NavBar from "@/components/navBar/page";
+import Image from "next/image";
 
 const Capture = () => {
   const videoRef = useRef(null);
@@ -42,42 +42,65 @@ const Capture = () => {
   }
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden bg-black">
-      <video
-        ref={videoRef}
-        autoPlay
-        muted
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover"
-      />
-      <canvas ref={canvasRef} className="hidden" />
+    <>
+      <NavBar />
+      <div className="relative w-full h-212 overflow-hidden bg-black">
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <canvas ref={canvasRef} className="hidden" />
 
-      <button
-        onClick={handleTakePicture}
-        aria-label="Take Picture"
-        className="absolute right-10 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full border-4 border-white cursor-pointer hover:scale-105 transition-transform duration-300"
-      ></button>
-
-      <Link href="/results" className="absolute bottom-8 left-9 md:left-8">
-        <div className="relative w-12 h-12 flex items-center justify-center border border-white rotate-45 scale-100 sm:hidden">
-          <span className="-rotate-45 text-xs font-semibold text-white">
-            BACK
-          </span>
+        <div className="absolute top-1/4 right-0 w-90 h-100 text-white text-[14px] font-bold flex items-center justify-center">
+          TAKE PICTURE
+          <button
+            onClick={handleTakePicture}
+            aria-label="Take Picture"
+            className="absolute right-10 top-1/2 -translate-y-1/2 w-18 h-18 rounded-full border-2 border-white bg-white cursor-pointer hover:scale-105 transition-transform duration-300 flex justify-center items-center"
+          >
+            <div className="innerCircle relative rounded-full border-2 border-black w-full h-full flex justify-center items-center">
+              <Image
+                src={"/cameraCapture.png"}
+                width={10}
+                height={10}
+                alt={"Camera"}
+                className="w-8 "
+              />
+            </div>
+          </button>
         </div>
-        <BackButton />
-      </Link>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-white">
-        <p className="text-xs md:text-sm font-semibold tracking-wider uppercase mb-3">
-          To Get Better Results Make Sure To Have
-        </p>
-        <div className="flex flex-row gap-6 text-[11px] md:text-xs uppercase tracking-wide text-white/80">
-          {TIPS.map((tip) => (
-            <span key={tip}>{tip}</span>
-          ))}
+        <div className="absolute top-3/6 left-2/6 w-100 h-100 flex flex-col gap-4 text-white text-[16px] justify-center items-center">
+          TO GET BETTER RESULTS MAKE SURE TO HAVE
+          <ul className="w-120 flex gap-10 text-[12px]">
+            <li className="flex items-center gap-1">
+              <span className="w-2 h-2 shrink-0 bg-[url(/Rectangle%202681white.png)] bg-contain bg-no-repeat" />
+              NEUTRAL EXPRESSION
+            </li>
+            <li className="flex items-center gap-1">
+              <span className="w-2 h-2 shrink-0 bg-[url(/Rectangle%202681white.png)] bg-contain bg-no-repeat" />
+              FRONTAL POSE
+            </li>
+            <li className="flex items-center gap-1">
+              <span className="w-2 h-2 shrink-0 bg-[url(/Rectangle%202681white.png)] bg-contain bg-no-repeat" />
+              ADEQUATE LIGHTING
+            </li>
+          </ul>
         </div>
+
+        <Link href="/results" className="absolute bottom-8 left-9 md:left-8">
+          <div className="relative w-12 h-12 flex items-center justify-center border border-white rotate-45 scale-100 sm:hidden">
+            <span className="-rotate-45 text-xs font-semibold text-white">
+              BACK
+            </span>
+          </div>
+          <BackButton className="text-white" />
+        </Link>
       </div>
-    </div>
+    </>
   );
 };
 
