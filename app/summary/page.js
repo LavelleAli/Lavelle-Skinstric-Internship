@@ -1,13 +1,23 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NavBar from "@/components/navBar/page";
 import Link from "next/link";
 import { MdArrowRight } from "react-icons/md";
 import { MdArrowLeft } from "react-icons/md";
 
+function scoresToBreakdown(scores) {
+  if (!scores) return null;
+  return Object.entries(scores)
+    .map(([label, fraction]) => ({
+      label: label.charAt(0).toUpperCase() + label.slice(1),
+      percent: Math.round(fraction * 100),
+    }))
+    .sort((a, b) => b.percent - a.percent);
+}
+
 const Summary = () => {
   // Right selections variables:
-  const RACE_BREAKDOWN = [
+  const DEFAULT_RACE_BREAKDOWN = [
     { label: "South asian", percent: 30 },
     { label: "Southeast asian", percent: 29 },
     { label: "Black", percent: 3 },
@@ -17,7 +27,7 @@ const Summary = () => {
     { label: "White", percent: 6 },
   ];
 
-  const ageBreakdown = [
+  const DEFAULT_AGE_BREAKDOWN = [
     { label: "0-2", percent: 0 },
     { label: "3-9", percent: 0 },
     { label: "10-19", percent: 0 },
@@ -29,10 +39,21 @@ const Summary = () => {
     { label: "70+", percent: 0 },
   ];
 
-  const sexSelection = [
-    { label: "Male", percent: 100 },
-    { label: "Female", percent: 0 },
+  const DEFAULT_SEX_SELECTION = [
+      { label: "Male", percent: 100 },
+      { label: "Female", percent: 0 },
   ]
+
+  const [analysis, setAnalysis] = useState(null);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("skinstricAnalysis");
+    if (stored) setAnalysis(JSON.parse(stored));
+  }, []);
+
+  const RACE_BREAKDOWN = scoresToBreakdown(analysis?.race) ?? DEFAULT_RACE_BREAKDOWN;
+  const ageBreakdown = scoresToBreakdown(analysis?.age) ?? DEFAULT_AGE_BREAKDOWN;
+  const sexSelection = scoresToBreakdown(analysis?.gender) ?? DEFAULT_SEX_SELECTION;
 
   const [selectedByCategory, setSelectedByCategory] = useState({
     RACE: "South asian",
@@ -47,6 +68,18 @@ const Summary = () => {
     }));
   }
 
+  useEffect(() => {
+    if (!analysis) return;
+    const race = scoresToBreakdown(analysis.race);
+    const age = scoresToBreakdown(analysis.age);
+    const gender = scoresToBreakdown(analysis.gender);
+    setSelectedByCategory({
+      RACE: race?.[0]?.label ?? "South asian",
+      AGE: age?.[0]?.label ?? "70+",
+      SEX: gender?.[0]?.label ?? "Female",
+    });
+  }, [analysis]);
+
   // Left selections variables:
   const [selectedCategory, setSelectedCategory] = useState("RACE");
 
@@ -55,9 +88,9 @@ const Summary = () => {
   }
 
     const breakdownByCategory = {
-    RACE: RACE_BREAKDOWN,
-    AGE: ageBreakdown,
-    SEX: sexSelection,
+    RACE: [...RACE_BREAKDOWN].sort((a, b) => b.percent - a.percent),
+    AGE: [...ageBreakdown].sort((a, b) => b.percent - a.percent),
+    SEX: [...sexSelection].sort((a, b) => b.percent - a.percent),
   }
 
   const CIRCUMFERENCE = 308.819;

@@ -9,6 +9,7 @@ import Link from "next/link";
 import NavBar from "@/components/navBar/page";
 import RotatingSquares from "@/components/RotatingSquares/RotatingSquares";
 import { VscCircleSmall } from "react-icons/vsc";
+import axios from "axios";
 
 const Results = () => {
   const router = useRouter();
@@ -18,6 +19,10 @@ const Results = () => {
   const [analyzing, setAnalyzing] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const openGalleryRef = useRef(null);
+  
+
+
+
 
   function handleUserGallery(event) {
     const file = event.target.files[0];

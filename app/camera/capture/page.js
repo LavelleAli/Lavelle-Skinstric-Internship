@@ -1,14 +1,19 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import BackButton from "@/components/BackButton/BackButton";
 import NavBar from "@/components/navBar/page";
 import Image from "next/image";
+import axios from "axios";
 
 const Capture = () => {
+  const router = useRouter();
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [capturedImage, setCapturedImage] = useState(null);
+  const [userPhoto, setUserPhoto] = useState(null);
+  const [reveal, setReveal] = useState(false)
 
   useEffect(() => {
     let activeStream = null;
@@ -30,6 +35,23 @@ const Capture = () => {
     };
   }, []);
 
+  async function userPhotoAnalyzing(photo) {
+    try {
+      const { data } = await axios.post(`https://us-central1-frontend-simplified.cloudfunctions.net/skinstricPhaseTwo`, {image: photo}
+
+      );
+      setUserPhoto(data)
+      localStorage.setItem("skinstricAnalysis", JSON.stringify(data.data));
+      console.log(data)
+
+    }
+    catch (error) {
+      console.log("Error posting data", error)
+      // console.log("Status:", error.response?.status)
+      // console.log("Server said:", error.response?.data)
+    }
+  }
+
   function handleTakePicture() {
     const video = videoRef.current;
     const canvas = canvasRef.current;
@@ -38,7 +60,21 @@ const Capture = () => {
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
-    setCapturedImage(canvas.toDataURL("image/png"));
+
+    const dataUrl = canvas.toDataURL("image/png");
+    setCapturedImage(dataUrl);
+    userPhotoAnalyzing(dataUrl.split(",")[1]);
+    setReveal(true);
+  }
+
+  function handleRetake() {
+    setCapturedImage(null);
+    setUserPhoto(null);
+    setReveal(false);
+  }
+
+  function handleUsePhoto() {
+    router.push("/select");
   }
 
   return (
@@ -73,7 +109,21 @@ const Capture = () => {
           </button>
         </div>
 
-        <div className="absolute top-3/6 left-2/6 w-100 h-100 flex flex-col gap-4 text-white text-[16px] justify-center items-center">
+        <div
+         className={`AfterImageCapture absolute top-1/5 left-200 w-200 h-100 text-white text-[15px] ${reveal ? "" : "hidden"}`}>
+          GREAT SHOT!
+          <div className="relative top-130 right-90 flex flex-col text-center text-xl font-medium">
+            Preview
+            <div className="relative top-10 space-x-10">
+              <button onClick={handleRetake} className="bg-white text-black text-[14px] font-normal p-2">
+                Retake
+              </button>
+              <button onClick={handleUsePhoto} className="w-40 bg-[#3d3d3d] text-[14px] font-normal p-2">Use This Photo</button>
+            </div>
+          </div>
+        </div>
+
+        <div className="absolute top-3/6 left-2/6 w-100 h-100 flex flex-col gap-4 text-white text-[16px] justify-center items-center ">
           TO GET BETTER RESULTS MAKE SURE TO HAVE
           <ul className="w-120 flex gap-10 text-[12px]">
             <li className="flex items-center gap-1">
