@@ -16,13 +16,12 @@ const Camera = () => {
     navigator.mediaDevices
       .getUserMedia({ video: true })
       .then((stream) => {
-        // Permission confirmed here — /camera/capture requests its own stream,
-        // so this one's only purpose was the permission prompt.
+  
         stream.getTracks().forEach((track) => track.stop());
         if (!cancelled) router.push("/camera/capture");
       })
       .catch(() => {
-        if (!cancelled) router.push("/results");
+        if (!cancelled) router.push("/results?cameraDenied=true");
       });
 
     return () => {

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useGSAP } from "@gsap/react";
@@ -10,6 +10,17 @@ import NavBar from "@/components/navBar/page";
 import RotatingSquares from "@/components/RotatingSquares/RotatingSquares";
 import { VscCircleSmall } from "react-icons/vsc";
 
+function noopSubscribe() {
+  return () => {};
+}
+
+function getCameraDenied() {
+  return new URLSearchParams(window.location.search).get("cameraDenied") === "true";
+}
+
+function getServerCameraDenied() {
+  return false;
+}
 
 const Results = () => {
   const router = useRouter();
@@ -18,11 +29,12 @@ const Results = () => {
   const [fileSelect, setFileSelect] = useState(null);
   const [analyzing, setAnalyzing] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const cameraDenied = useSyncExternalStore(
+    noopSubscribe,
+    getCameraDenied,
+    getServerCameraDenied,
+  );
   const openGalleryRef = useRef(null);
-  
-
-
-
 
   function handleUserGallery(event) {
     const file = event.target.files[0];
@@ -65,6 +77,12 @@ const Results = () => {
           <>
         <div className="absolute top-2 left-9 md:left-8 text-left">
           <p className="font-semibold text-xs md:text-sm">TO START ANALYSIS</p>
+          {cameraDenied && (
+            <p className="text-[12px] text-red-600 mt-1 max-w-60">
+              Please allow camera access for photo submission, or upload a
+              picture from your gallery instead.
+            </p>
+          )}
         </div>
         <div className="flex-[0.4] md:flex-1 flex flex-col md:flex-row items-center xl:justify-center relative mb-0 md:mb-30 space-y-16 md:space-y-0">
           <div className="relative md:absolute md:left-[60%] lg:left-[45%] xl:left-2/6 md:translate-y-0 translate-y-[-1%] md:-translate-x-full flex flex-col items-center justify-center ">

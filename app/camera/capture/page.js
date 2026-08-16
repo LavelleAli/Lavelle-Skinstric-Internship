@@ -14,6 +14,8 @@ const Capture = () => {
   const [capturedImage, setCapturedImage] = useState(null);
   const [userPhoto, setUserPhoto] = useState(null);
   const [reveal, setReveal] = useState(false)
+  const [analyzing, setAnalyzing] = useState(false);
+  const [analysisSucceeded, setAnalysisSucceeded] = useState(false);
 
   useEffect(() => {
     let activeStream = null;
@@ -28,31 +30,29 @@ const Capture = () => {
       })
       .catch((err) => {
         console.error("Camera access denied or unavailable:", err);
+        router.push("/results?cameraDenied=true");
       });
 
     return () => {
       activeStream?.getTracks().forEach((track) => track.stop());
     };
-  }, []);
+  }, [router]);
 
   async function userPhotoAnalyzing(photo) {
     try {
       const { data } = await axios.post(`https://us-central1-frontend-simplified.cloudfunctions.net/skinstricPhaseTwo`, {image: photo}
-
       );
       setUserPhoto(data)
       localStorage.setItem("skinstricAnalysis", JSON.stringify(data.data));
-      console.log(data)
-
+      return true;
     }
     catch (error) {
       console.log("Error posting data", error)
-      // console.log("Status:", error.response?.status)
-      // console.log("Server said:", error.response?.data)
+      return false;
     }
   }
 
-  function handleTakePicture() {
+  async function handleTakePicture() {
     const video = videoRef.current;
     const canvas = canvasRef.current;
     if (!video || !canvas) return;
@@ -63,17 +63,23 @@ const Capture = () => {
 
     const dataUrl = canvas.toDataURL("image/png");
     setCapturedImage(dataUrl);
-    userPhotoAnalyzing(dataUrl.split(",")[1]);
     setReveal(true);
+    setAnalyzing(true);
+    const succeeded = await userPhotoAnalyzing(dataUrl.split(",")[1]);
+    setAnalysisSucceeded(succeeded);
+    setAnalyzing(false);
   }
 
   function handleRetake() {
     setCapturedImage(null);
     setUserPhoto(null);
     setReveal(false);
+    setAnalyzing(false);
+    setAnalysisSucceeded(false);
   }
 
   function handleUsePhoto() {
+    if (!analysisSucceeded) return;
     router.push("/select");
   }
 
@@ -125,7 +131,13 @@ const Capture = () => {
               <button onClick={handleRetake} className="bg-white text-black text-[14px] font-normal p-2">
                 Retake
               </button>
-              <button onClick={handleUsePhoto} className="w-40 bg-[#3d3d3d] text-[14px] font-normal p-2">Use This Photo</button>
+              <button
+                onClick={handleUsePhoto}
+                disabled={analyzing || !analysisSucceeded}
+                className="w-40 bg-[#3d3d3d] text-[14px] font-normal p-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {analyzing ? "Analyzing..." : "Use This Photo"}
+              </button>
             </div>
           </div>
         </div>

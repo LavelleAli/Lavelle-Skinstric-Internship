@@ -12,7 +12,8 @@ export default function Home() {
   const [rightHovered, setRightHovered] = useState(false);
 
   useEffect(() => {
-    setVisible(true);
+    const frame = requestAnimationFrame(() => setVisible(true));
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   return (

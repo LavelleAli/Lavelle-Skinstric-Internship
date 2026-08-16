@@ -1,10 +1,21 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import NavBar from "@/components/navBar/page";
 import Link from "next/link";
 import { MdArrowRight } from "react-icons/md";
 import { MdArrowLeft } from "react-icons/md";
 
+function noopSubscribe() {
+  return () => {};
+}
+
+function getStoredAnalysis() {
+  return localStorage.getItem("skinstricAnalysis");
+}
+
+function getServerAnalysis() {
+  return null;
+}
 
 function scoresToBreakdown(scores) {
   if (!scores) return null;
@@ -45,41 +56,39 @@ const Summary = () => {
       { label: "Female", percent: 0 },
   ]
 
-  const [analysis, setAnalysis] = useState(null);
+  const storedAnalysis = useSyncExternalStore(
+    noopSubscribe,
+    getStoredAnalysis,
+    getServerAnalysis,
+  );
+  const analysis = storedAnalysis ? JSON.parse(storedAnalysis) : null;
 
-  useEffect(() => {
-    const stored = localStorage.getItem("skinstricAnalysis");
-    if (stored) setAnalysis(JSON.parse(stored));
-  }, []);
+  const race = scoresToBreakdown(analysis?.race);
+  const age = scoresToBreakdown(analysis?.age);
+  const gender = scoresToBreakdown(analysis?.gender);
 
-  const RACE_BREAKDOWN = scoresToBreakdown(analysis?.race) ?? DEFAULT_RACE_BREAKDOWN;
-  const ageBreakdown = scoresToBreakdown(analysis?.age) ?? DEFAULT_AGE_BREAKDOWN;
-  const sexSelection = scoresToBreakdown(analysis?.gender) ?? DEFAULT_SEX_SELECTION;
+  const RACE_BREAKDOWN = race ?? DEFAULT_RACE_BREAKDOWN;
+  const ageBreakdown = age ?? DEFAULT_AGE_BREAKDOWN;
+  const sexSelection = gender ?? DEFAULT_SEX_SELECTION;
 
-  const [selectedByCategory, setSelectedByCategory] = useState({
-    RACE: "South asian",
-    AGE: "70+",
-    SEX: "Female",
-  });
+  const defaultSelectedByCategory = {
+    RACE: race?.[0]?.label ?? "South asian",
+    AGE: age?.[0]?.label ?? "70+",
+    SEX: gender?.[0]?.label ?? "Female",
+  };
+
+  const [selectionOverrides, setSelectionOverrides] = useState({});
+  const selectedByCategory = {
+    ...defaultSelectedByCategory,
+    ...selectionOverrides,
+  };
 
   function handleActiveSelection(label) {
-    setSelectedByCategory((prev) => ({
+    setSelectionOverrides((prev) => ({
       ...prev,
       [selectedCategory]: label,
     }));
   }
-
-  useEffect(() => {
-    if (!analysis) return;
-    const race = scoresToBreakdown(analysis.race);
-    const age = scoresToBreakdown(analysis.age);
-    const gender = scoresToBreakdown(analysis.gender);
-    setSelectedByCategory({
-      RACE: race?.[0]?.label ?? "South asian",
-      AGE: age?.[0]?.label ?? "70+",
-      SEX: gender?.[0]?.label ?? "Female",
-    });
-  }, [analysis]);
 
   // Left selections variables:
   const [selectedCategory, setSelectedCategory] = useState("RACE");
