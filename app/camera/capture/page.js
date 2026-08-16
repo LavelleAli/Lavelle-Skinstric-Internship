@@ -88,6 +88,13 @@ const Capture = () => {
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
         />
+        {capturedImage && (
+          <img
+            src={capturedImage}
+            alt="Captured photo"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        )}
         <canvas ref={canvasRef} className="hidden" />
 
         <div className="absolute top-1/4 right-0 w-90 h-100 text-white text-[14px] font-bold flex items-center justify-center">
@@ -123,7 +130,7 @@ const Capture = () => {
           </div>
         </div>
 
-        <div className="absolute top-3/6 left-2/6 w-100 h-100 flex flex-col gap-4 text-white text-[16px] justify-center items-center ">
+        <div className= {`absolute top-3/6 left-2/6 w-100 h-100 flex flex-col gap-4 text-white text-[16px] justify-center items-center ${reveal ? "hidden" : ""} `}>
           TO GET BETTER RESULTS MAKE SURE TO HAVE
           <ul className="w-120 flex gap-10 text-[12px]">
             <li className="flex items-center gap-1">

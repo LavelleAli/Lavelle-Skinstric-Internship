@@ -5,6 +5,7 @@ import Link from "next/link";
 import { MdArrowRight } from "react-icons/md";
 import { MdArrowLeft } from "react-icons/md";
 
+
 function scoresToBreakdown(scores) {
   if (!scores) return null;
   return Object.entries(scores)

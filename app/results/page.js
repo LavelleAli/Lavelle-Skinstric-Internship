@@ -9,7 +9,7 @@ import Link from "next/link";
 import NavBar from "@/components/navBar/page";
 import RotatingSquares from "@/components/RotatingSquares/RotatingSquares";
 import { VscCircleSmall } from "react-icons/vsc";
-import axios from "axios";
+
 
 const Results = () => {
   const router = useRouter();
@@ -88,7 +88,7 @@ const Results = () => {
                 onClick={() => setCamera(true)}
               />
               <div className="absolute bottom-[1%] right-22.5 md:top-[30.9%] md:-right-3 -translate-y-5">
-                <p className="relative right-[-60px] top-[-30px] text-xs md:text-sm font-normal mt-1 leading-6 ">
+                <p className="relative -right-15 -top-7.5 text-xs md:text-sm font-normal mt-1 leading-6 ">
                   ALLOW A.I.
                   <br />
                   TO SCAN YOUR FACE
@@ -97,11 +97,11 @@ const Results = () => {
                   alt="Scan Line"
                   width={66}
                   height={59}
-                  className="absolute rotate-180 hidden md:block md:right-22 md:top-[-10px]"
+                  className="absolute rotate-180 hidden md:block md:right-22 md:-top-2.5"
                   src="/Vector 1.png"
                 />
                 <VscCircleSmall
-                  className="absolute rotate-180 hidden md:block md:right-19.5 md:top-[-19px]"
+                  className="absolute rotate-180 hidden md:block md:right-19.5 md:-top-4.75"
                   width={50}
                   height={50}
                 />
@@ -166,7 +166,7 @@ const Results = () => {
                 />
               </button>
               <div className="absolute top-3/4 md:top-[70%] md:left-4.25 -translate-y-2.5">
-                <p className=" absolute top-12 left-[-100px] w-30 text-xs md:text-sm font-normal mt-2 leading-6 text-right">
+                <p className=" absolute top-12 -left-25 w-30 text-xs md:text-sm font-normal mt-2 leading-6 text-right">
                   ALLOW A.I.
                   <br />
                   ACCESS GALLERY

@@ -18,23 +18,25 @@ export default function Home() {
   return (
     <>
       <NavBar />
-      <div className="nextRouteAnnouncerForScreenreadersComeBackToThisLater"></div>
       <div>
         <div className={styles.row}>
           <div className={styles.lsContentBorder}></div>
           <div className={styles.rsContentBorder}></div>
           <div className={styles.main_heading}>
             <h1
-              className={`${styles.heading} [transition:opacity_3000ms_ease,translate_800ms_ease] ${
-                visible ? "opacity-100" : "opacity-0"
-              } ${leftHovered ? "translate-x-[15vw] " : "translate-x-0"}
-               ${rightHovered ? "translate-x-[-15vw]" : "translate-x-0"}`}
+              className={`
+                ${styles.heading} [transition:opacity_3000ms_ease,translate_800ms_ease] 
+                ${visible ? "opacity-100" : "opacity-0"}
+                ${leftHovered ? "translate-x-[15vw] " : "translate-x-0"}
+                ${rightHovered ? "translate-x-[-15vw]" : "translate-x-0"}`
+              }
             >
-              Sophisticated <br />{" "}
+              Sophisticated <br />
               <span
-                className={`inline-block [transition:translate_800ms_ease]
-                  ${leftHovered ? "translate-x-[6rem]" : "translate-x-0"}
-                  ${rightHovered ? "translate-x-[-6rem]" : "translate-x-0"}
+                className={`
+                  inline-block [transition:translate_800ms_ease]
+                  ${leftHovered ? "translate-x-24" : "translate-x-0"}
+                  ${rightHovered ? "-translate-x-24" : "translate-x-0"}
                 `}
               >
                 skincare
